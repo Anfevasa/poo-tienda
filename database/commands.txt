@@ -24,3 +24,11 @@ SHOW TABLES;
 
 -- Seleccionar y mostrar todos los registros de la tabla 'customer'.
 SELECT * FROM customer;
+
+
+
+Montar el venv:
+
+python -m env env
+
+source env/bin/activate
