@@ -1,7 +1,15 @@
 import mysql.connector
 
 class Conexion:
-    def __init__(self, host, port, user, password, database):
+    _instance = None
+
+    def __new__(cls, host, port, user, password, database):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._initialize(host, port, user, password, database)
+        return cls._instance
+
+    def _initialize(self, host, port, user, password, database):
         self.host = host
         self.port = port
         self.user = user
@@ -10,24 +18,29 @@ class Conexion:
         self.connection = None
 
     def connect_db(self):
-        try:
-            self.connection = mysql.connector.connect(
-                host=self.host,
-                port=self.port,
-                user=self.user,
-                password=self.password,
-                database=self.database
-            )
-            print("Conexion Exitosa")
-        except mysql.connector.Error as err:
-            print("La conexion ha fallado", err)
+        if self.connection is None or not self.connection.is_connected():
+            try:
+                self.connection = mysql.connector.connect(
+                    host=self.host,
+                    port=self.port,
+                    user=self.user,
+                    password=self.password,
+                    database=self.database
+                )
+                print("Conexión Exitosa")
+            except mysql.connector.Error as err:
+                print("La conexión ha fallado", err)
 
     def disconnect(self):
-        if self.connection:
+        if self.connection and self.connection.is_connected():
             self.connection.close()
-            print("Conexion Cerrada")
+            print("Conexión Cerrada")
 
     def execute_query(self, query, params=None):
+        if self.connection is None or not self.connection.is_connected():
+            print("La conexión no está establecida.")
+            return None
+
         cursor = self.connection.cursor(buffered=True)
         try:
             cursor.execute(query, params)
