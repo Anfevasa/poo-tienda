@@ -30,11 +30,10 @@ class Category:
         return Category(row[0], row[1])
 
 
-
-    def create_category(self, db):
-        self._category_id = int(input("id"))
-        self._category_name = input("Nombre categoria")
-        query = "INSERT INTO category(category_id , category_name)VALUES(%s,%s) "
+    def create_category(self, db, category):
+        # self._category_id = int(input("id"))
+        # self._category_name = input("Nombre categoria")
+        query = "INSERT INTO category( category_name)VALUES(%s) "
         params = (self._category_id , self._category_name)
         db.execute_query(query, params)
 

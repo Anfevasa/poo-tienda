@@ -32,3 +32,12 @@ Montar el venv:
 python -m env env
 
 source env/bin/activate
+
+
+instalar dependencias del proyecto:
+pip install mysql-connector-python
+pip install fastapi 
+pip install fastapi uvicorn
+
+Montar api 
+uvicorn main:app --reload
