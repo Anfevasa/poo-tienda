@@ -19,7 +19,12 @@ database = 'TiendaJPBB'
 db = Conexion(host, port, user, password, database)
 db.connect_db()
 
-@app.post('/create_category/', tags=["Registrar categoria"])
+@app.post('/create_category/', tags=["Category"])
 def create_category(category_name: str=Body()):
     new_category = Category(None,None)
-    new_category.create_category(db,category_name)
+    return new_category.create_category(db,category_name)
+
+@app.get('/categories', tags=["Category"])
+def get_categories():
+    categories = Category(None,None)
+    return categories.get_category(db)
