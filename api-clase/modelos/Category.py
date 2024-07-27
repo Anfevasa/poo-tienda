@@ -37,7 +37,8 @@ class Category:
         params = (category_name,)
         return db.execute_query(query, params)
 
-    def get_category(self, db):
+    @staticmethod
+    def get_category(db):
         query = "SELECT * FROM category"
         result = db.execute_query(query)
         if result:
@@ -51,22 +52,23 @@ class Category:
             print("Categorias no encontradas")
             return []
 
-
-    def delete_category(self, db , category_id):
+    @staticmethod
+    def delete_category( db , category_id):
         query = "DELETE FROM category WHERE category_id = %s"
         db.execute_query(query, (category_id,))
 
-    def update_category(self, db):
+    @staticmethod
+    def update_category(db, category_id,category_name):
         # Solicita el ID de la categoría a actualizar
-        category_id = int(input("Ingrese el ID de la categoría que desea actualizar: "))
+        # category_id = int(input("Ingrese el ID de la categoría que desea actualizar: "))
         # Solicita los nuevos valores
-        new_category_name = input("Ingrese el nuevo nombre de la categoría: ")
+        # new_category_name = input("Ingrese el nuevo nombre de la categoría: ")
 
         # Consulta para actualizar la categoría
         query = "UPDATE category SET category_name = %s WHERE category_id = %s"
-        params = (new_category_name, category_id)
+        params = (category_name, category_id)
         
         # Ejecuta la consulta
         db.execute_query(query, params)
-        print(f"Categoría con ID {category_id} actualizada a {new_category_name}.")
+        print(f"Categoría con ID {category_id} actualizada a {category_name}.")
 

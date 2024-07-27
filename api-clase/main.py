@@ -24,7 +24,14 @@ def create_category(category_name: str=Body()):
     new_category = Category(None,None)
     return new_category.create_category(db,category_name)
 
-@app.get('/categories', tags=["Category"])
-def get_categories():
-    categories = Category(None,None)
-    return categories.get_category(db)
+@app.get('/get_categories', tags=["Category"])
+def get_categories(): 
+    return Category(None,None).get_category(db)
+
+@app.delete('/delete_category', tags=["Category"])
+def delete_category(category_id: int=Body()):
+    return Category(None,None).delete_category(db,category_id)
+
+@app.put('/update_category', tags = ["Category"])
+def update_category(category_id:int=Body(),category_name:str=Body()):
+    return Category(None,None).update_category(db,category_id,category_name)  
