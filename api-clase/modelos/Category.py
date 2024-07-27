@@ -31,8 +31,6 @@ class Category:
 
 
     def create_category(self, db, category_name):
-        # self._category_id = int(input("id"))
-        # self._category_name = input("Nombre categoria")
         query = "INSERT INTO category( category_name)VALUES(%s) "
         params = (category_name,)
         return db.execute_query(query, params)
@@ -59,11 +57,6 @@ class Category:
 
     @staticmethod
     def update_category(db, category_id,category_name):
-        # Solicita el ID de la categoría a actualizar
-        # category_id = int(input("Ingrese el ID de la categoría que desea actualizar: "))
-        # Solicita los nuevos valores
-        # new_category_name = input("Ingrese el nuevo nombre de la categoría: ")
-
         # Consulta para actualizar la categoría
         query = "UPDATE category SET category_name = %s WHERE category_id = %s"
         params = (category_name, category_id)
